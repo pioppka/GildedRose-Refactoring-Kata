@@ -14,51 +14,44 @@ void updateQuality(int q, int value)
 
 void GildedRose::updateData()
 {
+    const string itemNames[3] = {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"};
     for (auto &item: items)
     {
-        item.sellIn -= (item.name == "Sulfuras, Hand of Ragnaros") ? 0 : 1;
+        item.sellIn -= (item.name == itemNames[2]) ? 0 : 1;
 
-        if (item.name == "Aged Brie")
+        switch(item.name)
         {
-            if (item.sellIn < 0)
-            {
-                updateQuality(item.quality, 2);
-            }
-            else
-            {
-                updateQuality(item.quality, 1);
-            }
-        }
-        else if (item.name == "Backstage passes to a TAFKAL80ETC concert")
-        {
-            if (item.sellIn < 0)
-            {
-                item.quality = 0;
-            }
-            else if (item.sellIn < 5)
-            {
-                updateQuality(item.quality, 3);
-            }
-            else if (item.sellIn < 10)
-            {
-                updateQuality(item.quality, 2);
-            }
-            else
-            {
-                updateQuality(item.quality, 1);
-            }
-        }
-        else if (item.name == "Sulfuras, Hand of Ragnaros")
-        {
-            updateQuality(item.quality, 0);
-        }
-        else if (item.sellIn < 0)
-        {
-            updateQuality(item.quality, -2);
-        }
-        else
-        {
-            updateQuality(item.quality, -1);
+            case itemNames[0]:
+                
+                updateQuality(item.quality, (item.sellIn < 0) ? 2 : 1)
+                break;
+                
+            case itemNames[1]:
+                if (item.sellIn < 0)
+                {
+                    updateQuality(item.quality, -item.quality);
+                }
+                else if (item.sellIn < 5)
+                {
+                    updateQuality(item.quality, 3);
+                }
+                else if (item.sellIn < 10)
+                {
+                    updateQuality(item.quality, 2);
+                }
+                else
+                {
+                    updateQuality(item.quality, 1);
+                }
+                break;
+                
+            case itemNames[2]:
+                updateQuality(item.quality, 0);
+                break;
+                
+            default:
+                updateQuality(item.quality, (item.sellIn < 0) ? -2 : -1)
+                break;
         }
     }
 }
