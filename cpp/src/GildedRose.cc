@@ -1,20 +1,21 @@
 #include "GildedRose.h"
 
+const string itemNames[3] = {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"}; 
+
 GildedRose::GildedRose(vector<Item> & items) : items(items)
 {
 }
 
-void updateQuality(int q, int value)
+void updateQuality(int quality, int value)
 {
-    if(0 < q && q < 50)
+    if(0 < quality && quality < 50)
     {
-        q += value;
+        quality += value;
     }
 }
 
 void GildedRose::updateData()
 {
-    const string itemNames[3] = {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"};
     for (auto &item: items)
     {
         item.sellIn -= (item.name == itemNames[2]) ? 0 : 1;
